@@ -1,0 +1,11 @@
+Skills info:
+
+Laser Beam : a damaging attack that deals 15 damage.
+Atomic Blast: a damaging attack that deals 30 damage, deal % damage to the user.
+Energy Blast: a damaging attack that deals 10 damage.
+Stun: keep enemy in place and deals 7 damage.
+Bleed: a low level damaging attack that deals 5 damage.
+Heal: a healing skill that heal for % missing health.
+Blind: a % chance of enemy missing or reduced damage.
+Evade: % chance of dodging enemy attack or reduced damage.
+Tank: reduced % damage
