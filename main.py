@@ -112,20 +112,22 @@ def main():
         display(hero)  #To dislay the boss and player stats
 
         if hero.mp < 7.5:
+            print(get_boss_lines()[5])
             print(get_boss_lines()[6])
             print(get_boss_lines()[7])
-            print(get_boss_lines()[8])
             hero.hp = hero.hp - 100
+            break
 
         elif Boss.mp < 10:
+            print(get_boss_lines()[8])
             print(get_boss_lines()[9])
             print(get_boss_lines()[10])
-            print(get_boss_lines()[11])
+            break
 
         elif turn == 0:  #For the first move of the player.
             display_boss_im()
+            print(colored(get_boss_lines()[0], 'red'))
             print(colored(get_boss_lines()[1], 'red'))
-            # print(colored(get_boss_lines()[2], 'red'))
             print()
 
             move = int(input("1>> Attack\n2>> Pass\nYour move: ")) 
@@ -151,10 +153,8 @@ def main():
                 turn += 2
 
             else:
-                print(colored(get_boss_lines()[2], 'red'))
-                print(colored(get_boss_lines()[2], 'red'))
-                print(colored(get_boss_lines()[15], 'red'))
-                print(colored(f"Malakar used UNDYING RAGE on you, 'yellow'\n"))
+                print(colored(get_boss_lines()[14], 'red'))
+                print(colored("Malakar used UNDYING RAGE on you", 'yellow'))
 
                 rage_skill = 60
                 hero.hp = hero.hp - rage_skill
@@ -226,7 +226,7 @@ def main():
         
         elif turn == 2: # for the bosses turn.
             print()
-            print(colored(get_boss_lines()[14], 'light_magenta'))
+            print(colored(get_boss_lines()[13], 'light_magenta'))
             tank = 1
             evade_dmg = 1
             if hero.tank:
@@ -270,9 +270,9 @@ def main():
 
     if hero.hp <= 0 or hero.mp < 10:       
         txt_style = colored(figlet_format("GAME OVER!!", font='slant'), 'light_red')
-        engine.say("game over")
+        engine.say("GAME OVER")
         engine.runAndWait()
-        song = AudioSegment.from_wav("I_win.wav")
+        song = AudioSegment.from_wav("Audio/I_win.wav")
 
         play(song)      
         print(txt_style)

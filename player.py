@@ -10,7 +10,7 @@ class Player:
         self.tank = False
         self.evade = False
         self.skill_dict = {"Laser Beam": 15, "Atomic Blast": 30, "Energy Blast": 10, 
-                           "Stun": 7, "Bleed": 5, "Blind": 5, "Heal": 4}
+                           "Stun": 7, "Bleed": 5, "Blind": 5, "Heal": 10}
         self.skills = ["Laser Beam", "Atomic Blast", "Energy Blast", "Stun", "Bleed", "Blind", "Heal"]
         self.skill1 = self.skills[skill1 - 1]
         self.skill2 = self.skills[skill2 - 1]
