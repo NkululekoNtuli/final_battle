@@ -10,7 +10,7 @@ class Boss:
 
     @classmethod
     def get_boss_info(cls):
-        return (f"Demo king: {cls.boss_name}\nAbilities: {cls.skills.keys()}\nHealth: {cls.hp} \nMagic Power: {cls.mp} \nDps: {cls.dps}")
+        return (f"Demo king: {cls.boss_name}\nAbilities: {cls.skills.keys()}\nHealth: {cls.hp} \nMagic Power: {cls.mp}")
     
     @classmethod
     def get_hp(cls):

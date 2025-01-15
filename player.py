@@ -4,7 +4,7 @@ from boss import Boss
 class Player:
     healthDashes = 20
     health_bar = ""
-    def __init__(self, name="Player", skill1=0, skill2=1, skill3=2):
+    def __init__(self, name="Player", skill1=1, skill2=2, skill3=7):
         self.damage_delt = Boss.max_hp - Boss.hp
         self.name = name
         self.tank = False
@@ -12,9 +12,9 @@ class Player:
         self.skill_dict = {"Laser Beam": 15, "Atomic Blast": 30, "Energy Blast": 10, 
                            "Stun": 7, "Bleed": 5, "Blind": 5, "Heal": 10}
         self.skills = ["Laser Beam", "Atomic Blast", "Energy Blast", "Stun", "Bleed", "Blind", "Heal"]
-        self.skill1 = self.skills[skill1 - 1]
-        self.skill2 = self.skills[skill2 - 1]
-        self.skill3 = self.skills[skill3 - 1]
+        self.skill1 = skill1
+        self.skill2 = skill2
+        self.skill3 = skill3
         self.hp = 100  
         self.max_hp = 100
         self.mp = 100
@@ -53,7 +53,10 @@ class Player:
     
     @name.setter
     def name(self, string):
-        self._name = string
+        if not string:
+            self._name = "Player"
+        else:
+            self._name = string
 
     @property
     def skill1(self):
@@ -61,7 +64,13 @@ class Player:
     
     @skill1.setter
     def skill1(self, skill):
-        self._skill1 = skill 
+        if skill.isdigit():
+            if int(skill) > 0 and int(skill) < 8:
+                self._skill1 = self.skills[int(skill) - 1]
+            else:
+                self._skill1 = self.skills[1 - 1]
+        else:
+            self._skill1 = self.skills[1 - 1]
 
     @property
     def skill2(self):
@@ -69,7 +78,13 @@ class Player:
     
     @skill2.setter
     def skill2(self, skill):
-        self._skill2 = skill 
+        if skill.isdigit():
+            if int(skill) > 0 and int(skill) < 8:
+                self._skill2 = self.skills[int(skill) - 1]
+            else:
+                self._skill2 = self.skills[2 - 1]
+        else:
+            self._skill2 = self.skills[2 - 1]
 
     @property
     def skill3(self):
@@ -77,7 +92,14 @@ class Player:
     
     @skill3.setter
     def skill3(self, skill):
-        self._skill3 = skill 
+        if skill.isdigit():
+            if int(skill) > 1 and int(skill) < 8:
+                self._skill3 = self.skills[int(skill) - 1]
+            else:
+                self._skill3 = self.skills[7 - 1]
+        else:
+            self._skill3 = self.skills[7 - 1]
+
 
     @property
     def hp(self):
@@ -111,6 +133,7 @@ class Player:
     def level(self, v):
         self._level = v
     
+
     @property
     def health_bar(self):
         dashConvert = int(self.max_hp/self.healthDashes) 

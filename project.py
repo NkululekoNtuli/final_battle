@@ -8,7 +8,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 import fontstyle
-import pyttsx3
 import random
 import time
  
@@ -17,7 +16,8 @@ def get_intro():  #To get intro
     try:
         with open("Text/intro.txt", "r") as f:
             file = f.read()
-        return fontstyle.apply(file, 'Italic')
+            file =  str(fontstyle.apply(file, 'Italic'))
+        return file
     except FileNotFoundError:
         print("File not found")
 
@@ -33,7 +33,7 @@ def get_boss_lines():
 
 def get_skill_info():
     try:
-        with open("Text/skill_info.txt") as f:
+        with open("Text/skill_info.txt", "r") as f:
             file = f.read()
             return colored(file, 'cyan')
     except FileNotFoundError:
@@ -48,19 +48,24 @@ def get_outro():  #To get outro
         print("File not found")
 
 
-def creat_player():  #To creat player
-    hero = Player(input("Enter your name hero: "),
-        int(input("Abilities:\n1>> Laser Beam\n2>> Atomic Blast\n3>> Energy Blast\n4>> Stun\n5>> Bleed\n6>> Blind\n7>> Heal\nEnter number of skill you want to choose for primary skill: ")),
-        int(input("Enter number of skill you want to choose for secondary skill: ")),
-        int(input("Enter number of skill you want to choose for ultimate skill: ")))
+def create_player():  #To creat player
+    name = input("Enter your name hero: ")
+    ability_1 = input("Abilities:\n1>> Laser Beam\n2>> Atomic Blast\n3>> Energy Blast\n4>> Stun\n5>> Bleed\n6>> Blind\n7>> Heal\nEnter number of skill you want to choose for primary skill: ")
+    ability_2 = input("Enter number of skill you want to choose for secondary skill: ")
+    ability_3 = input("Enter number of skill you want to choose for ultimate skill: ")
+
+    hero = Player(name, ability_1, ability_2, ability_3)
     return hero
 
 
 def style_output(text):  # For displaying into and outro in style
+    text_output = ""
     for l in text:
         print(l, end='', flush=True)
-        time.sleep(0.1)
+        time.sleep(0.01)
+        text_output += l     
     print("\n")
+    return text_output
 
 
 def display(hero):  #To display boss name and health
@@ -92,17 +97,16 @@ def display_boss_im():
     ImageNumpyFormat = np.asarray(ImageItself)
     plt.imshow(ImageNumpyFormat)
     plt.draw()
-    plt.pause(7) 
+    plt.pause(6) 
     plt.close()
 
 
 def main():
-    engine = pyttsx3.init()
-    intro = get_intro()
+    intro = get_intro("Text/intro.txt")
     outro = get_outro()
     style_output(f"\n{intro}\n")
     print(f"{get_skill_info()}\n")
-    hero = creat_player()
+    hero = create_player()
     print()
     blind_dmg = 1 
     turn = 0
@@ -130,11 +134,25 @@ def main():
             print(colored(get_boss_lines()[1], 'red'))
             print()
 
-            move = int(input("1>> Attack\n2>> Pass\nYour move: ")) 
+            move = input("1>> Attack\n2>> Pass\nYour move: ")
+            if move.isdigit():
+                if int(move) == 1 or int(move) == 2:
+                    move = int(move)
+                else:
+                    move = random.choice([1, 2])
+            else:
+                move = random.choice([1, 2])
             print()
 
             if move == 1:  #Display choices that can be made.
-                ability_move = int(input(f"1>> {hero.skill1}\n2>> {hero.skill2}\n3>> {hero.skill3}\nYour move: "))
+                ability_move = input(f"1>> {hero.skill1}\n2>> {hero.skill2}\n3>> {hero.skill3}\nYour move: ")
+                if ability_move.isdigit():
+                    if int(ability_move) == 1 or int(ability_move) == 2 or int(ability_move) == 3:
+                        ability_move = int(ability_move)
+                    else:
+                        ability_move = random.choice([1, 3])
+                else:
+                    ability_move = random.choice([1, 3])
 
                 if ability_move == 1:
                     if ((ability_move == 1) and (hero.skill1 == "Laser Beam" or hero.skill1 == "Atomic Blast" or hero.skill1 == "Energy Blast" or hero.skill1 == "Bleed")):
@@ -163,11 +181,25 @@ def main():
                 turn += 1
                 
         elif turn == 1:  #Any other move thats is not the first one.
-            move = int(input("1>> Attack\n2>> Evade\n3>> Tank\nYour move: "))
+            move = input("1>> Attack\n2>> Evade\n3>> Tank\nYour move: ")
+            if move.isdigit():
+                if int(move) == 1 or int(move) == 2:
+                    move = int(move)
+                else:
+                    move = random.choice([1, 3])
+            else:
+                move = random.choice([1, 3])
             print()
 
             if move == 1:
-                ability_move = int(input(f"1>> {hero.skill1}\n2>> {hero.skill2}\n3>> {hero.skill3}\nYour move: "))
+                ability_move = input(f"1>> {hero.skill1}\n2>> {hero.skill2}\n3>> {hero.skill3}\nYour move: ")
+                if ability_move.isdigit():
+                    if int(ability_move) == 1 or int(ability_move) == 2 or int(ability_move) == 3: 
+                        ability_move = int(ability_move)
+                    else:
+                        ability_move = random.choice([1, 3])
+                else:
+                    ability_move = random.choice([1, 3])
 
                 # For damaging skills
                 if ((ability_move == 1) and (hero.skill1 == "Laser Beam" or hero.skill1 == "Atomic Blast" or hero.skill1 == "Energy Blast" or hero.skill1 == "Bleed")):
@@ -270,21 +302,16 @@ def main():
 
     if hero.hp <= 0 or hero.mp < 10:       
         txt_style = colored(figlet_format("GAME OVER!!", font='slant'), 'light_red')
-        engine.say("GAME OVER")
-        engine.runAndWait()
         song = AudioSegment.from_wav("Audio/I_win.wav")
-
-        play(song)      
+        
         print(txt_style)
+        play(song)      
         print(hero)
         print()
         print(Boss.get_boss_info())
 
-
     else:
         txt_style = colored(figlet_format("YOU WIN!!", font='slant'), 'light_green')
-        engine.say(f"you win")
-        engine.runAndWait()
 
         print(txt_style)
         print()
@@ -296,4 +323,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    style_output("hello")
