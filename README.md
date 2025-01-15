@@ -1,8 +1,7 @@
 # PROJECT TITLE: final_battle
 
-    #### Video Demo:  <URL HERE>
+    #### Video Demo:  https://youtu.be/Q1MTh31FbOY
     #### Description:
-
     The final_battle.py program is a short and simple text-based game where a player has to create their character
     and select their preferred abilities/skills to fight the NPC/boss. It uses a turn-based system to determine
     who is supposed to make a move. The program contains three folders in the root directory: Audio, Img, andText. 
