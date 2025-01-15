@@ -101,7 +101,7 @@ def display_boss_im():
 
 
 def main():
-    intro = get_intro("Text/intro.txt")
+    intro = get_intro()
     outro = get_outro()
     style_output(f"\n{intro}\n")
     print(f"{get_skill_info()}\n")
@@ -322,5 +322,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    style_output("hello")
+    main()
