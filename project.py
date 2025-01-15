@@ -11,7 +11,6 @@ import fontstyle
 import random
 import time
  
-
 def get_intro():  #To get intro
     try:
         with open("Text/intro.txt", "r") as f:
